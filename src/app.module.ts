@@ -15,10 +15,9 @@ import * as path from 'path';
 		AuthModule,
 		TypeOrmModule.forRoot({
 			type: 'sqlite',
-			database:
-				// ':memory:',
+			database: ':memory:',
 
-				path.resolve(__dirname, '..', 'src/global/database/boardDB.db'),
+			// path.resolve(__dirname, '..', 'src/global/database/boardDB.db'),
 			entities: [Users, Boards],
 			synchronize: true
 		}),
