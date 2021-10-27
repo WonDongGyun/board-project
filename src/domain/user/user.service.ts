@@ -5,6 +5,7 @@ import { Users } from '../entities/entities/user.entity';
 import { SignUpDto } from './dto/user.signUpDto';
 import * as bcrypt from 'bcrypt';
 import { AuthDto } from './dto/user.authDto';
+import { UserDuplicateException } from './exception/UserDuplicateException';
 
 @Injectable()
 export class UserService {
@@ -18,11 +19,15 @@ export class UserService {
 		return await bcrypt.hash(password, 10);
 	}
 
-	async userFind(userId: string) {
-		return await this.usersRepository.findOne({ userId: userId });
-	}
-
 	async userCreate(signUpDto: SignUpDto) {
+		const findUser = await this.usersRepository.findOne({
+			userId: signUpDto.userId
+		});
+
+		if (findUser) {
+			throw new UserDuplicateException();
+		}
+
 		const user = new Users();
 		user.userId = signUpDto.userId;
 		user.password = await this.hashPassword(signUpDto.password);

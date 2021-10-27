@@ -1,9 +1,20 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+	Body,
+	ClassSerializerInterceptor,
+	Controller,
+	Post,
+	Request,
+	UseGuards,
+	UseInterceptors
+} from '@nestjs/common';
+import { ApiResponse } from 'src/global/common/ApiResponse';
+import { SuccessCode } from 'src/global/common/SuccessCode';
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from '../auth/guards/localAuthGuard.guard';
 import { SignUpDto } from './dto/user.signUpDto';
 import { UserService } from './user.service';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
 export class UserController {
 	constructor(
@@ -13,14 +24,22 @@ export class UserController {
 
 	// 사용자 생성
 	@Post('')
-	signUp(@Body() signUpDto: SignUpDto) {
-		return this.userService.userCreate(signUpDto);
+	async signUp(@Body() signUpDto: SignUpDto): Promise<ApiResponse> {
+		const apiResponse = ApiResponse.response(
+			SuccessCode.createUser(),
+			await this.userService.userCreate(signUpDto)
+		);
+		return apiResponse;
 	}
 
 	// 사용자 인증
 	@UseGuards(LocalAuthGuard)
 	@Post('login')
-	async userAuth(@Request() req) {
-		return this.authService.makeToken(req.user);
+	async userAuth(@Request() req): Promise<ApiResponse> {
+		const apiResponse = ApiResponse.response(
+			SuccessCode.login(),
+			await this.authService.makeToken(req.user)
+		);
+		return apiResponse;
 	}
 }

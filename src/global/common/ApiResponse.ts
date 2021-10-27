@@ -1,15 +1,16 @@
 import { CommonResponse } from './CommonResponse';
+import { SuccessCode } from './SuccessCode';
 
 export class ApiResponse extends CommonResponse {
-	constructor(response: any) {
+	constructor(successCode: SuccessCode, response: any) {
 		super();
 		this.success = true;
-		this.message = 'test';
-		this.status = 1;
+		this.message = successCode.getMessage();
+		this.status = successCode.getStatus();
 		this.data = response;
 	}
 
-	public static boardsApiResponse(response: any) {
-		return new ApiResponse(response);
+	public static response(successCode: SuccessCode, response: any) {
+		return new ApiResponse(successCode, response);
 	}
 }
