@@ -75,6 +75,10 @@ export class BoardService {
 			skip: skip
 		});
 
+		for (const board of await result) {
+			const user: Users = await board.users;
+		}
+
 		return result;
 	}
 

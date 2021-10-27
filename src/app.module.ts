@@ -15,13 +15,11 @@ import * as path from 'path';
 		AuthModule,
 		TypeOrmModule.forRoot({
 			type: 'sqlite',
-			database: path.resolve(
-				__dirname,
-				'..',
-				'src/global/database/boardDB.db'
-			),
+			database:
+				// ':memory:',
+
+				path.resolve(__dirname, '..', 'src/global/database/boardDB.db'),
 			entities: [Users, Boards],
-			logging: true,
 			synchronize: true
 		}),
 		BoardModule
