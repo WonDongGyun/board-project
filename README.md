@@ -15,7 +15,16 @@
 서버 실행 방법  
 -----------------  
 
-1. 패키지를 설치합니다.
+1. 상단의 Code 버튼을 눌러 경로를 복사한 후 클론 받습니다.  
+
+```
+$ git clone https://github.com/WonDongGyun/board-project.git
+```
+
+<br/>
+<br/>
+
+2. 패키지를 설치합니다.
 
 ```
 $ npm install
@@ -24,7 +33,7 @@ $ npm install
 <br/>
 <br/>
 
-2. 서버를 실행해 줍니다.
+3. 서버를 실행해 줍니다.
 
 ```
 $ npm run start
