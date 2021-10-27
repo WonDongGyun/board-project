@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { BoardVerifyException } from 'src/domain/board/exception/BoardVerifyException';
+import { NotFoundBoardException } from 'src/domain/board/exception/BoardVerifyException copy';
 import { UserDuplicateException } from 'src/domain/user/exception/UserDuplicateException';
 import { ErrorCode } from '../common/ErrorCode';
 import { ErrorResponse } from '../common/ErrorResponse';
@@ -26,11 +27,20 @@ export class ExceptionHandler implements ExceptionFilter {
 			response
 				.status(status)
 				.json(ErrorResponse.response(ErrorCode.userDuplicate()));
+		} else if (exception instanceof NotFoundBoardException) {
+			const status = exception.getStatus();
+			response
+				.status(status)
+				.json(ErrorResponse.response(ErrorCode.notFoundBoard()));
 		} else if (exception instanceof UnauthorizedException) {
 			const status = exception.getStatus();
 			response
 				.status(status)
 				.json(ErrorResponse.response(ErrorCode.unauthorized()));
+		} else {
+			response
+				.status(400)
+				.json(ErrorResponse.response(ErrorCode.badRequest()));
 		}
 	}
 }

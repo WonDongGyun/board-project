@@ -16,8 +16,6 @@ import * as path from 'path';
 		TypeOrmModule.forRoot({
 			type: 'sqlite',
 			database: ':memory:',
-
-			// path.resolve(__dirname, '..', 'src/global/database/boardDB.db'),
 			entities: [Users, Boards],
 			synchronize: true
 		}),

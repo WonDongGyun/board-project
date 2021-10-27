@@ -26,4 +26,12 @@ export class ErrorCode {
 	public static unauthorized() {
 		return new ErrorCode(406, 'Unauthorized');
 	}
+
+	public static notFoundBoard() {
+		return new ErrorCode(404, 'Not Found Board');
+	}
+
+	public static badRequest() {
+		return new ErrorCode(404, 'Bad Request');
+	}
 }

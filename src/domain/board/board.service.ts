@@ -6,6 +6,7 @@ import { Users } from '../entities/entities/user.entity';
 import { UpdateDto } from './dto/board.updateDto';
 import { WriteDto } from './dto/board.writeDto';
 import { BoardVerifyException } from './exception/BoardVerifyException';
+import { NotFoundBoardException } from './exception/BoardVerifyException copy';
 
 @Injectable()
 export class BoardService {
@@ -23,6 +24,10 @@ export class BoardService {
 			boardId: boardId
 		});
 		const user: Users = await board.users;
+
+		if (!board) {
+			throw new NotFoundBoardException();
+		}
 
 		if (user.userId != loginUser.userId) {
 			throw new BoardVerifyException();
